@@ -8,8 +8,9 @@ namespace Livraria.Application.AutoMapper
         {
             Mapper.Initialize(x =>
             {
-                //x.AddProfile<DomainToViewModelMappingProfile>();
-                //x.AddProfile<ViewModelToDomainMappingProfile>();                
+                x.AddProfile<DomainToViewModelMappingProfile>();
+                x.AddProfile<ViewModelToDomainMappingProfile>();
+                x.AddProfile<ViewModelToBusinessDtoMappingProfile>();
             });
         }
     }

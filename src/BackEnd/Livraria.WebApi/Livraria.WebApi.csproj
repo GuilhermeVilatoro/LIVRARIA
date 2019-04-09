@@ -5,6 +5,15 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <DocumentationFile>D:\GIT\THEOS\LIVRARIA\src\BackEnd\Livraria.WebApi\Livraria.WebApi.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\GIT\THEOS\LIVRARIA\src\BackEnd\Livraria.WebApi\Livraria.WebApi.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
@@ -14,10 +23,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Livraria.Application\Livraria.Application.csproj">
-      <Private>false</Private>
+      <Private></Private>
     </ProjectReference>
     <ProjectReference Include="..\Livraria.Infra.CrossCutting\Livraria.Infra.CrossCutting.csproj">
-      <Private>false</Private>
+      <Private></Private>
     </ProjectReference>
   </ItemGroup>
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Livraria.Infra.Data.Mappings;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 
@@ -8,6 +9,9 @@ namespace Livraria.Infra.Data.Context
     {
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new AutorMap());
+            modelBuilder.ApplyConfiguration(new LivroMap());
+
             base.OnModelCreating(modelBuilder);
         }
 

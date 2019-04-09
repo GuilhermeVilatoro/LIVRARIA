@@ -1,12 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
@@ -14,11 +10,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Livraria.Domain\Livraria.Domain.csproj">
-      <Private>false</Private>
+      <Private></Private>
     </ProjectReference>
     <ProjectReference Include="..\Livraria.Infra.Data\Livraria.Infra.Data.csproj">
-      <Private>false</Private>
+      <Private></Private>
     </ProjectReference>
-  </ItemGroup>
+  </ItemGroup> 
 
 </Project>

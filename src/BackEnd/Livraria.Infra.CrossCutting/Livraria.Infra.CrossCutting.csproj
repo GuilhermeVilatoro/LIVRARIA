@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -9,8 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Livraria.Application\Livraria.Application.csproj">
+      <Private></Private>
+    </ProjectReference>
     <ProjectReference Include="..\Livraria.Infra.Data\Livraria.Infra.Data.csproj">
-      <Private>false</Private>
+      <Private></Private>
     </ProjectReference>
   </ItemGroup>
 
