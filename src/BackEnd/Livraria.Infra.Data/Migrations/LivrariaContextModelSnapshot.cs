@@ -37,7 +37,7 @@ namespace Livraria.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Autor");
+                    b.ToTable("Autores");
                 });
 
             modelBuilder.Entity("Livraria.Domain.Models.Livro", b =>
@@ -66,7 +66,27 @@ namespace Livraria.Infra.Data.Migrations
 
                     b.HasIndex("AutorId");
 
-                    b.ToTable("Livro");
+                    b.ToTable("Livros");
+                });
+
+            modelBuilder.Entity("Livraria.Domain.Models.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Senha")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("Livraria.Domain.Models.Livro", b =>

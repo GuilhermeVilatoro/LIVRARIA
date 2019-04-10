@@ -2,11 +2,13 @@
 using Livraria.Application.Services.Interfaces;
 using Livraria.Application.ViewModels;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Livraria.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize("Bearer")]
     public class VinculacaoAutorLivroController : ApiController
     {
         private readonly IVinculacaoAutorLivroService _vinculacaoAutorLivroService;

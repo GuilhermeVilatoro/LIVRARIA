@@ -3,7 +3,7 @@ using Livraria.Application.AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Livraria.WebApi.Configuratios
+namespace Livraria.WebApi.Configurations
 {
     public static class AutoMapperSetup
     {

@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Livraria.Application.ViewModels;
 using Livraria.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Livraria.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize("Bearer")]
     public class AutorController : ApiController
     {
         private readonly IAutorService _autorService;
@@ -15,14 +17,14 @@ namespace Livraria.WebApi.Controllers
             _autorService = autorService;
         }
 
-        // GET: api/Livro
+        // GET: api/Autor
         [HttpGet]
         public IActionResult GetAutorViewModel()
         {
             return Response(_autorService.GetAll());
         }
 
-        // GET: api/Livro/5
+        // GET: api/Autor/5
         [HttpGet("{id}")]
         public IActionResult GetAutorViewModel(int id)
         {
@@ -31,7 +33,7 @@ namespace Livraria.WebApi.Controllers
             return Response(viewModel);
         }
 
-        // PUT: api/Livro/5
+        // PUT: api/Autor/5
         [HttpPut("{id}")]
         public IActionResult PutAutorViewModel([FromBody]AutorViewModel autorViemModel)
         {
@@ -43,7 +45,7 @@ namespace Livraria.WebApi.Controllers
             return Response(autorViemModel);
         }
 
-        // POST: api/Livro
+        // POST: api/Autor
         [HttpPost]
         public IActionResult PostAutorViewModel(AutorViewModel autorViemModel)
         {
@@ -55,7 +57,7 @@ namespace Livraria.WebApi.Controllers
             return Response(autorViemModel);
         }
 
-        // DELETE: api/Livro/5
+        // DELETE: api/Autor/5
         [HttpDelete("{id}")]
         public IActionResult DeleteAutorViewModel(int id)
         {

@@ -2,11 +2,13 @@
 using Livraria.Application.ViewModels;
 using Livraria.Application.Services.Interfaces;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Livraria.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize("Bearer")]
     public class LivroController : ApiController
     {
         private readonly ILivroService _livroService;

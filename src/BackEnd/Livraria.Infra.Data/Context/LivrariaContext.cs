@@ -1,4 +1,5 @@
-﻿using Livraria.Infra.Data.Mappings;
+﻿using Livraria.Domain.Models;
+using Livraria.Infra.Data.Mappings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.IO;
@@ -7,10 +8,17 @@ namespace Livraria.Infra.Data.Context
 {
     public class LivrariaContext : DbContext
     {
+        public DbSet<Livro> Livros { get; set; }
+
+        public DbSet<Autor> Autores { get; set; }
+
+        public DbSet<Usuario> Usuarios { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AutorMap());
             modelBuilder.ApplyConfiguration(new LivroMap());
+            modelBuilder.ApplyConfiguration(new UsuarioMap());
 
             base.OnModelCreating(modelBuilder);
         }

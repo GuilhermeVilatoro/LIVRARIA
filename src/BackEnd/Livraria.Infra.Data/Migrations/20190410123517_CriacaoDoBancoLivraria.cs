@@ -9,7 +9,7 @@ namespace Livraria.Infra.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Autor",
+                name: "Autores",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -19,11 +19,25 @@ namespace Livraria.Infra.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Autor", x => x.Id);
+                    table.PrimaryKey("PK_Autores", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Livro",
+                name: "Usuarios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(maxLength: 200, nullable: false),
+                    Senha = table.Column<string>(maxLength: 200, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Livros",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -37,28 +51,31 @@ namespace Livraria.Infra.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Livro", x => x.Id);
+                    table.PrimaryKey("PK_Livros", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Livro_Autor_AutorId",
+                        name: "FK_Livros_Autores_AutorId",
                         column: x => x.AutorId,
-                        principalTable: "Autor",
+                        principalTable: "Autores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Livro_AutorId",
-                table: "Livro",
+                name: "IX_Livros_AutorId",
+                table: "Livros",
                 column: "AutorId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Livro");
+                name: "Livros");
 
             migrationBuilder.DropTable(
-                name: "Autor");
+                name: "Usuarios");
+
+            migrationBuilder.DropTable(
+                name: "Autores");
         }
     }
 }

@@ -19,7 +19,8 @@ namespace Livraria.Infra.CrossCutting.IOC
         {
             #region Repository    
             dependencies.AddScoped<IAutorRepository, AutorRepository>();
-            dependencies.AddScoped<ILivroRepository, LivroRepository>();            
+            dependencies.AddScoped<ILivroRepository, LivroRepository>();
+            dependencies.AddScoped<IUsuarioRepository, UsuarioRepository>();
             dependencies.AddScoped<LivrariaContext>();
             #endregion
 
@@ -27,6 +28,7 @@ namespace Livraria.Infra.CrossCutting.IOC
             dependencies.AddScoped<IAutorService, AutorService>();
             dependencies.AddScoped<ILivroService, LivroService>();
             dependencies.AddScoped<IVinculacaoAutorLivroService, VinculacaoAutorLivroService>();
+            dependencies.AddScoped<IUsuarioService, UsuarioService>();
             #endregion region
 
             #region Business 

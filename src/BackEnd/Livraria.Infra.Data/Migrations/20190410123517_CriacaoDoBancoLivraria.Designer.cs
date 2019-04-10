@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Livraria.Infra.Data.Migrations
 {
     [DbContext(typeof(LivrariaContext))]
-    [Migration("20190409194627_CriacaoDoBancoLivraria")]
+    [Migration("20190410123517_CriacaoDoBancoLivraria")]
     partial class CriacaoDoBancoLivraria
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,7 @@ namespace Livraria.Infra.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Autor");
+                    b.ToTable("Autores");
                 });
 
             modelBuilder.Entity("Livraria.Domain.Models.Livro", b =>
@@ -68,7 +68,27 @@ namespace Livraria.Infra.Data.Migrations
 
                     b.HasIndex("AutorId");
 
-                    b.ToTable("Livro");
+                    b.ToTable("Livros");
+                });
+
+            modelBuilder.Entity("Livraria.Domain.Models.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Senha")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("Livraria.Domain.Models.Livro", b =>

@@ -1,17 +1,16 @@
 ﻿using System;
-using System.IO;
-using System.Reflection;
 using Livraria.Infra.CrossCutting.IOC;
-using Livraria.Infra.Data.Context;
-using Livraria.WebApi.Configuratios;
+using Livraria.WebApi.Configurations;
+using Livraria.WebApi.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Serialization;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace Livraria.WebApi
 {
@@ -24,9 +23,40 @@ namespace Livraria.WebApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var signingConfigurations = new SigningConfigurations();
+            services.AddSingleton(signingConfigurations);
+
+            var tokenConfigurations = new TokenConfigurations();
+            new ConfigureFromConfigurationOptions<TokenConfigurations>(
+                Configuration.GetSection("TokenConfigurations"))
+                    .Configure(tokenConfigurations);
+            services.AddSingleton(tokenConfigurations);
+
+            services.AddAuthentication(authOptions =>
+            {
+                authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                authOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(bearerOptions =>
+            {
+                var paramsValidation = bearerOptions.TokenValidationParameters;
+                paramsValidation.IssuerSigningKey = signingConfigurations.Key;
+                paramsValidation.ValidAudience = tokenConfigurations.Audience;
+                paramsValidation.ValidIssuer = tokenConfigurations.Issuer;
+                
+                paramsValidation.ValidateIssuerSigningKey = true;                
+                paramsValidation.ValidateLifetime = true;               
+                paramsValidation.ClockSkew = TimeSpan.Zero;
+            });
+         
+            services.AddAuthorization(auth =>
+            {
+                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
+                    .RequireAuthenticatedUser().Build());
+            });
+
             services.AddMvc()
                  .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                  .AddJsonOptions(option =>
@@ -38,39 +68,21 @@ namespace Livraria.WebApi
 
             services.AddAutoMapperSetup();
 
-            services.AddSwaggerGen(s =>
-            {
-                s.SwaggerDoc("v1", new Info
-                {
-                    Version = "v1",
-                    Title = "Livraria WebApi",
-                    Description = "Sistema de controle de uma livraria",
-                    Contact = new Contact { Name = "Guilherme Vilatoro Santos", Email = "vilatorog@gmail.com" }
-                });
-
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                s.IncludeXmlComments(xmlPath);
-            });
+            services.AddSwaggerDocumentation();            
 
             InjectionDependencies.RegisterDependencies(services);
 
             services.AddCors();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //UpdateDatabase(app);
+            MigrationExtensions.UpdateDatabase(app);
 
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             else
-            {
                 app.UseHsts();
-            }
 
             app.UseHttpsRedirection();
             app.UseCors(options => options.WithOrigins("http://localhost:4200")
@@ -78,26 +90,7 @@ namespace Livraria.WebApi
             .AllowAnyHeader());
             app.UseMvc();
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json",
-                    "Livraria WebApi");
-                c.RoutePrefix = string.Empty;
-            });
-        }
-
-        private static void UpdateDatabase(IApplicationBuilder app)
-        {
-            using (var serviceScope = app.ApplicationServices
-                .GetRequiredService<IServiceScopeFactory>()
-                .CreateScope())
-            {
-                using (var context = serviceScope.ServiceProvider.GetService<LivrariaContext>())
-                {
-                    context.Database.Migrate();
-                }
-            }
-        }
+            app.UseSwaggerDocumentation();
+        }        
     }
 }
