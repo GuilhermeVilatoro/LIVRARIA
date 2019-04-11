@@ -1,15 +1,11 @@
 # Livraria WebApi + Angular 7 Presentation
 
-[![Build Status](https://travis-ci.org/RodrigoPrandi/Livraria.svg?branch=master)](https://travis-ci.org/RodrigoPrandi/Livraria)
+## Informações para teste da API
 
-## Subindo o ambiente
-
-Executar o Docker compose na raiz do projeto:
-
-    docker-compose up
-
-Acessar a Api:  http://localhost:30227
-Acessar a Apresentação:  http://localhost:4200
+* Os testes poderão ser realizados rodando a API e batendo na raiz com swagger.
+* Os testes também poderão ser realizados via Postman com as suas respectivas rotas.
+* Após rodar a api(backend) informar no 'environments > URL_API' do frontend, qual a url local dos serviços.
+* Rodar a api Angular ng serve -o e realizar os testes no frontend.
 
 # Tecnologias usadas
 
@@ -17,12 +13,16 @@ Acessar a Apresentação:  http://localhost:4200
 
 * AspNet Core 2.2 (WebApi)
 * Swagger
-* Docker
-* Travis CI
+* Migration
+* Entity 
+* Generics
+* Conceito Repositório (Persistencia de dados)
+* AutoMapper
 * DDD (Domain-Driven-Design)
 * SOLID
 * Injeção de dependências
-
+* Testes unitários
+* NSubstitute
 
 ## FrontEnd
 
