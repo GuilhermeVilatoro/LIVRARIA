@@ -1,0 +1,26 @@
+<form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
+  <input type="hidden" name="Id" [value]="service.formData.Id">
+  <div class="form-group">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text bg-white">
+          <i class="fas fa-user-circle" [class.green-icon]=" Nome.valid" [class.red-icon]="Nome.invalid && Nome.touched"></i>
+        </div>
+      </div>
+      <input name="Nome" #Nome="ngModel" [(ngModel)]="service.formData.Nome" class="form-control"
+        placeholder="Nome" required>
+    </div>
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text bg-white">
+          <i class="fas fa-user-circle" [class.green-icon]=" Sobrenome.valid" [class.red-icon]="Sobrenome.invalid && Sobrenome.touched"></i>
+        </div>
+      </div>
+      <input name="Sobrenome" #Sobrenome="ngModel" [(ngModel)]="service.formData.Sobrenome" class="form-control"
+        placeholder="Sobrenome" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="form.invalid"><i class="fas fa-database"></i> Submit</button>
+  </div>
+</form>

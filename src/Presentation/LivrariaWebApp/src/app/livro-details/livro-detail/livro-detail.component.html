@@ -1,0 +1,79 @@
+<form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
+  <input type="hidden" name="Id" [value]="service.formData.Id">
+  <div class="form-group">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text bg-white">
+          <i class="fas fa-user-circle" [class.green-icon]=" Titulo.valid" [class.red-icon]="Titulo.invalid && Titulo.touched"></i>
+        </div>
+      </div>
+      <input name="Título" #Titulo="ngModel" [(ngModel)]="service.formData.Titulo" class="form-control"
+        placeholder="Título" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text bg-white">
+          <i class="fas fa-user-circle" [class.green-icon]=" NumeroDePaginas.valid" [class.red-icon]="NumeroDePaginas.invalid && NumeroDePaginas.touched"></i>
+        </div>
+      </div>
+      <input type="number" name="NumeroDePaginas" #NumeroDePaginas="ngModel" [(ngModel)]="service.formData.NumeroDePaginas" class="form-control"
+        placeholder="Número de Páginas" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text bg-white">
+          <i class="fas fa-user-circle" [class.green-icon]=" Edicao.valid" [class.red-icon]="Edicao.invalid && Edicao.touched"></i>
+        </div>
+      </div>
+      <input type="number" name="Edicao" #Edicao="ngModel" [(ngModel)]="service.formData.Edicao" class="form-control"
+        placeholder="Edição" required>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-7">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <div class="input-group-text bg-white">
+            <i class="fas fa-calendar-alt"  [class.green-icon]="Ano.valid" [class.red-icon]="Ano.invalid && Ano.touched"></i>
+          </div>
+        </div>
+        <input type="date" name="Ano" #Ano="ngModel" [(ngModel)]="service.formData.Ano" class="form-control"
+          required >
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text bg-white">
+          <i class="fas fa-user-circle" [class.green-icon]=" AutorId.valid" [class.red-icon]="AutorId.invalid && AutorId.touched"></i>
+        </div>
+      </div>
+      <select name="AutorId" #AutorId="ngModel" [(ngModel)]="service.formData.AutorId" class="form-control"
+        [class.is-invalid]="!isValid && service.formData.AutorId==0">
+          <option value="0">-Selecione o Autor-</option>
+          <option *ngFor="let item of autorList" value="{{item.Id}}">{{item.Nome}}</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <div class="input-group-text bg-white">
+          <i class="fas fa-user-circle" [class.green-icon]=" Descricao.valid" [class.red-icon]="Descricao.invalid && Descricao.touched"></i>
+        </div>
+      </div>
+      <textarea class="form-control" rows="5" re name="Descrição" #Descricao="ngModel" [(ngModel)]="service.formData.Descricao" id="Descricao"
+        placeholder="Descrição do livro" required></textarea>
+    </div>
+  </div>
+<div class="form-group">
+  <button class="btn btn-success btn-lg btn-block" type="submit" [disabled]="form.invalid"><i class="fas fa-database"></i> Submit</button>
+</div>
+</form>
